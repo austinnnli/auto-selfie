@@ -1,6 +1,7 @@
 idf_component_register(
     SRCS
         "main.c"
+        "tasks.c"
         "net.c"
         "drive.c"
         "tilt.c"

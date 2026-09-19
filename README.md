@@ -9,7 +9,7 @@ Three targets in one repository, built to the PRD in `docs/PRD.md`.
 
 | | Deliverable | Language | Target |
 |---|---|---|---|
-| D1 | `firmware/` | C (ESP-IDF) | ESP32-S3-CAM |
+| D1 | `firmware/` (ESP-IDF) or `firmware_arduino/` (Arduino IDE) | C / C++ | ESP32-S3-CAM |
 | D2 | `client/index.html` | HTML + JS, one file | Safari on iOS, served over HTTPS by D3 |
 | D3 | `app/` | Python 3.11+ | laptop |
 
@@ -30,12 +30,19 @@ make -C firmware/test                    # 38 C tests, host build
 pip install -r requirements.txt
 python tools/export_model.py             # 2-3x on a CPU-only laptop
 
-# 4. Firmware
+# 4. Firmware - EITHER ESP-IDF...
 python tools/gen_config_header.py
 cd firmware && idf.py set-target esp32s3
 idf.py -DROVER_WIFI_SSID=my-net -DROVER_WIFI_PASS=secret build flash monitor
-# note the IP the rover prints on join - config.json's net.firmware_host
-# must point at it, or pass it as: python -m app.run --host <that ip>
+
+# ...OR Arduino IDE: open firmware_arduino/framing_rover/framing_rover.ino
+# See firmware_arduino/README.md for the Tools-menu settings.
+
+# Either way: note the IP the rover prints on join.  config.json's
+# net.firmware_host must point at it, or pass it as:
+#     python -m app.run --host <that ip>
+# The committed default 192.168.4.1 is an access-point address and is
+# wrong for a rover that joins your network as a station.
 
 # 5. Drive it
 python -m app.teleop --dry-run           # prints what it would send
@@ -75,9 +82,10 @@ JavaScript port a two-day job.
 ## Layout
 
 ```
-firmware/                 D1
+firmware/                 D1, ESP-IDF build
   main/
-    main.c                task setup, core pinning (F-1)
+    main.c                the ESP-IDF entry point, and nothing else
+    tasks.c               the five tasks, core pinning (F-1) - SHARED
     net.c                 Wi-Fi, UDP rx/tx, sequence handling (W-5)
     drive.c               L298N: duty -> PWM + direction (F-2)
     tilt.c                28BYJ-48 phase sequencing, backlash (F-3)
@@ -87,6 +95,13 @@ firmware/                 D1
     rover_hal.h           the line between logic and silicon
     hal_esp32.c           rover_hal.h against ESP-IDF
   test/                   host build: the firmware logic, tested at a desk
+firmware_arduino/         D1, Arduino IDE build
+  framing_rover/
+    framing_rover.ino     the sketch to open; setup() calls the same tasks.c
+    net_arduino.cpp       net.h over WiFiUDP
+    hal_arduino.cpp       rover_hal.h over the Arduino core
+    *.c / *.h             COPIES of firmware/main/, kept current by a test
+  test/                   compiles the sketch without the IDE, both core versions
 client/
   index.html              D2, one file (C-1..C-7)
 app/                      D3
@@ -143,6 +158,12 @@ Each of these was a judgement call; the reasoning is in the file that made it.
   and never mutates its arguments. `decide()` is `step()[0]`.
 - **The corpus is 61 cases, not 50**, because covering every phase, both
   self-motion gate branches and each pose goal took that many.
+- **There are two firmware builds, sharing everything below the entry
+  point.** The PRD allows ESP-IDF or Arduino; both are here. `main.c` is now
+  12 lines and the five task bodies live in `tasks.c`, which both call, so the
+  two builds cannot drift where it matters. The Arduino sketch's copies of the
+  shared sources are generated and checked by a test, on the same argument as
+  `protocol.h` against `protocol.py`.
 - **`server.py` uses no third-party packages.** The phone client's whole
   premise is "no app, no install"; a laptop-side server that needs a working
   package index before the rover can move is the same problem one step back.
@@ -177,6 +198,7 @@ it has three tests.
 python tools/run_tests.py          # everything, no install
 pytest -q                          # the same tests, if pytest is available
 make -C firmware/test              # the C side
+make -C firmware_arduino/test      # the Arduino sketch, both core versions
 python tools/gen_golden.py --check # is the corpus current?
 python -m app.server --selftest    # C-6, end to end
 ```
@@ -239,6 +261,7 @@ the most likely source of silent misbehaviour, caught at a desk.
 
 Each step verified before the next (F-6), with the milestone that covers it:
 
+0. Flash and read the serial monitor — note the rover's IP
 1. Blink — `hal_led_set` in `safety_task`
 2. Wi-Fi join — `net_init`, watch the log for an IP
 3. UDP echo — `python -m app.teleop --dry-run`

@@ -17,6 +17,7 @@ test-py:
 
 test-c:
 	@$(MAKE) -s -C firmware/test
+	@$(MAKE) -s -C firmware_arduino/test
 
 # Fails if config.json, protocol.py or decide.py changed without the generated
 # files being regenerated - which is how a stale golden corpus or a drifted
@@ -25,6 +26,7 @@ check: test
 	@$(PYTHON) tools/gen_test_vectors.py >/dev/null
 	@$(PYTHON) tools/gen_config_header.py >/dev/null
 	@$(PYTHON) tools/gen_golden.py --check
+	@$(PYTHON) tools/gen_arduino_sketch.py --check
 	@if git rev-parse --git-dir >/dev/null 2>&1; then \
 		git diff --quiet -- firmware/main/config_defaults.h firmware/test/vectors.h \
 			tests/fixtures/protocol_vectors.json \
@@ -36,6 +38,7 @@ generated:
 	@$(PYTHON) tools/gen_test_vectors.py
 	@$(PYTHON) tools/gen_config_header.py
 	@$(PYTHON) tools/gen_golden.py
+	@$(PYTHON) tools/gen_arduino_sketch.py
 
 # C-6: the risk to retire in the first hour.
 selftest:
@@ -49,4 +52,5 @@ firmware: firmware-config
 
 clean:
 	@$(MAKE) -s -C firmware/test clean
+	@$(MAKE) -s -C firmware_arduino/test clean
 	@find . -name __pycache__ -type d -exec rm -rf {} + 2>/dev/null || true

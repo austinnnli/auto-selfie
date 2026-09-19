@@ -1,3 +1,12 @@
+/* === COPY - DO NOT EDIT ===============================================
+ *
+ * Generated from firmware/main/net.h by tools/gen_arduino_sketch.py.
+ * Edit the original and re-run the generator; an edit here is overwritten
+ * and tests/test_arduino_sketch.py will fail in the meantime.
+ *
+ * The copy exists because Arduino IDE only compiles files beside the .ino.
+ * ==================================================================== */
+
 /* net.h - Wi-Fi join, UDP rx/tx, sequence handling. */
 
 #ifndef ROVER_NET_H

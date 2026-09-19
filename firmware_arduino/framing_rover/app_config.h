@@ -1,3 +1,12 @@
+/* === COPY - DO NOT EDIT ===============================================
+ *
+ * Generated from firmware/main/app_config.h by tools/gen_arduino_sketch.py.
+ * Edit the original and re-run the generator; an edit here is overwritten
+ * and tests/test_arduino_sketch.py will fail in the meantime.
+ *
+ * The copy exists because Arduino IDE only compiles files beside the .ino.
+ * ==================================================================== */
+
 /* app_config.h - pin map and compiled-in defaults.
  *
  * H-1 PIN BUDGET - READ THIS BEFORE FLASHING ANYTHING.

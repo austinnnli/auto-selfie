@@ -1,3 +1,12 @@
+/* === COPY - DO NOT EDIT ===============================================
+ *
+ * Generated from firmware/main/protocol.h by tools/gen_arduino_sketch.py.
+ * Edit the original and re-run the generator; an edit here is overwritten
+ * and tests/test_arduino_sketch.py will fail in the meantime.
+ *
+ * The copy exists because Arduino IDE only compiles files beside the .ino.
+ * ==================================================================== */
+
 /* protocol.h - wire protocol between the laptop and the rover firmware.
  *
  * SHARED DEFINITION.  This file and app/protocol.py must define the same
