@@ -1,0 +1,136 @@
+{
+  "_comment": "Every tunable in the system. Hot-reloaded by the control app (app/config.py watches mtime); flashed into the firmware defaults via tools/gen_config_header.py. No gain is ever a literal in code.",
+  "config_version": 1,
+
+  "hardware": {
+    "pwm_freq": 1000,
+    "min_duty_left": 320,
+    "min_duty_right": 330,
+    "trim": -0.03,
+    "max_duty": 650,
+    "max_duty_per_tick": 40,
+    "steps_per_degree": 11.4,
+    "backlash_steps": 24,
+    "max_step_rate": 500,
+    "range_stop_mm": 350,
+    "vbat_min_mv": 6600,
+    "tilt_min_deg": -35.0,
+    "tilt_max_deg": 35.0,
+    "tilt_release_ms": 200
+  },
+
+  "camera": {
+    "hfov_deg": 66.0,
+    "vfov_deg": 50.5,
+    "frame_hz": 12,
+    "work_width": 480,
+    "jpeg_quality": 0.6
+  },
+
+  "control": {
+    "yaw":  {"kp": 1.8, "deadband": 0.02, "max_cmd": 0.5,
+             "kp_rate": 0.020, "max_rate_dps": 40.0, "rate_z_sign": 1.0,
+             "rate_deadband_dps": 8.0},
+    "dist": {"kp": 1.2, "deadband": 0.03, "max_cmd": 0.4},
+    "tilt": {"kp": 0.8, "deadband": 0.5, "max_step_deg": 6.0,
+             "max_lead_deg": 15.0},
+    "loop_hz": 25.0,
+    "flow_eps": 0.004,
+    "shoulder_jump": 0.02,
+    "slow_range_mm": 1000,
+    "slow_factor": 0.5,
+    "settle_still_s": 1.0
+  },
+
+  "sweep": {
+    "enabled": true,
+    "duty": 300,
+    "sample_interval_s": 0.25,
+    "min_samples": 8,
+    "max_duration_s": 25.0,
+    "shoulder_span": 0.35,
+    "recheck_tolerance": 0.04,
+    "max_corrections": 3
+  },
+
+  "feasibility": {
+    "spacing_tolerance": 0.05,
+    "window_s": 4.0,
+    "min_progress": 0.015,
+    "min_object_h": 0.02
+  },
+
+  "goal": {
+    "wake_gesture_hold_s": 1.0,
+    "listen_timeout_s": 8.0,
+    "parse_confidence": 0.75,
+    "confirm_window": 2.0,
+    "tier2_enabled": true,
+    "tier2_timeout_s": 5.0,
+    "tier2_model": "claude-sonnet-4-5"
+  },
+
+  "composition_defaults": {
+    "subject_x": 0.333,
+    "object_x": 0.667,
+    "eyeline_y": 0.333,
+    "subject_height": 0.5,
+    "size_ratio": 2.4
+  },
+
+  "pose": {
+    "tol_deg": 3.0,
+    "foreshorten_ratio": 0.7,
+    "forearm_to_shoulder": 0.63,
+    "rover_authority_deg": 8.0,
+    "hold_tol_frac": 0.02,
+    "look_tol_deg": 8.0,
+    "beside_tol_frac": 0.03,
+    "template_tol_deg": 10.0,
+    "min_keypoint_conf": 0.4,
+    "bias_gain": 0.012,
+    "max_subject_x_bias": 0.12
+  },
+
+  "coach": {
+    "min_speak_interval": 1.8,
+    "coach_timeout": 20.0,
+    "hysteresis": 1.6,
+    "max_cue_age_s": 0.5,
+    "countdown_from": 3,
+    "burst_frames": 7
+  },
+
+  "safety": {
+    "watchdog_ms": 250,
+    "lost_halt_s": 0.5,
+    "lost_search_s": 2.0,
+    "lost_give_up_s": 8.0,
+    "search_sweep_deg": 60.0,
+    "search_duty": 280
+  },
+
+  "session": {
+    "arm_timeout_s": 30.0,
+    "frame_timeout_s": 45.0,
+    "settle_timeout_s": 8.0,
+    "capture_timeout_s": 4.0,
+    "max_reframes": 1
+  },
+
+  "net": {
+    "firmware_host": "192.168.4.1",
+    "firmware_port": 3333,
+    "telemetry_port": 3334,
+    "command_hz": 30,
+    "server_port": 8443,
+    "cert": "certs/server.crt",
+    "key": "certs/server.key"
+  },
+
+  "record": {
+    "dir": "logs",
+    "save_frames": true,
+    "frame_every": 1
+  }
+}

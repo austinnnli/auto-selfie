@@ -1,0 +1,317 @@
+{
+  "protocol_version": 1,
+  "cmd_size": 14,
+  "tlm_size": 16,
+  "crc": [
+    {
+      "input": "123456789",
+      "crc": 10673
+    },
+    {
+      "input": "",
+      "crc": 65535
+    },
+    {
+      "input": "A",
+      "crc": 47381
+    },
+    {
+      "input": "rover",
+      "crc": 1431
+    },
+    {
+      "input": "\u0000\u0000\u0000\u0000",
+      "crc": 33984
+    },
+    {
+      "input": "\u00ff\u00ff\u00ff\u00ff",
+      "crc": 7439
+    }
+  ],
+  "seq": [
+    {
+      "new": 1,
+      "old": 0,
+      "advanced": true
+    },
+    {
+      "new": 0,
+      "old": 0,
+      "advanced": false
+    },
+    {
+      "new": 0,
+      "old": 65535,
+      "advanced": true
+    },
+    {
+      "new": 65535,
+      "old": 0,
+      "advanced": false
+    },
+    {
+      "new": 100,
+      "old": 99,
+      "advanced": true
+    },
+    {
+      "new": 99,
+      "old": 100,
+      "advanced": false
+    },
+    {
+      "new": 5,
+      "old": 65530,
+      "advanced": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "zero",
+      "seq": 0,
+      "left": 0,
+      "right": 0,
+      "tilt_deg_x10": 0,
+      "enable": false,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "0100000000000000000000008c87"
+    },
+    {
+      "name": "enable_only",
+      "seq": 1,
+      "left": 0,
+      "right": 0,
+      "tilt_deg_x10": 0,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "0101010000000000000000008030"
+    },
+    {
+      "name": "forward",
+      "seq": 2,
+      "left": 500,
+      "right": 500,
+      "tilt_deg_x10": 0,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "01010200f401f401000000008246"
+    },
+    {
+      "name": "spin_left",
+      "seq": 3,
+      "left": -400,
+      "right": 400,
+      "tilt_deg_x10": 0,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "0101030070fe900100000000e327"
+    },
+    {
+      "name": "negative_tilt",
+      "seq": 4,
+      "left": 0,
+      "right": 0,
+      "tilt_deg_x10": -123,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "010104000000000085ff0000ee5c"
+    },
+    {
+      "name": "positive_tilt",
+      "seq": 5,
+      "left": 0,
+      "right": 0,
+      "tilt_deg_x10": 317,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "01010500000000003d010000eabf"
+    },
+    {
+      "name": "saturate_high",
+      "seq": 6,
+      "left": 1000,
+      "right": 1000,
+      "tilt_deg_x10": 900,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "01010600e803e803840300002abc"
+    },
+    {
+      "name": "saturate_low",
+      "seq": 7,
+      "left": -1000,
+      "right": -1000,
+      "tilt_deg_x10": -900,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "0101070018fc18fc7cfc00006d25"
+    },
+    {
+      "name": "clamped_over",
+      "seq": 8,
+      "left": 1000,
+      "right": -1000,
+      "tilt_deg_x10": 0,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "01010800e80318fc000000005400"
+    },
+    {
+      "name": "tilt_release",
+      "seq": 9,
+      "left": 0,
+      "right": 0,
+      "tilt_deg_x10": 50,
+      "enable": true,
+      "tilt_release": true,
+      "zero_tilt": false,
+      "bytes": "010309000000000032000000f91b"
+    },
+    {
+      "name": "zero_tilt",
+      "seq": 10,
+      "left": 0,
+      "right": 0,
+      "tilt_deg_x10": 0,
+      "enable": false,
+      "tilt_release": false,
+      "zero_tilt": true,
+      "bytes": "01040a0000000000000000000a42"
+    },
+    {
+      "name": "all_flags",
+      "seq": 11,
+      "left": -1,
+      "right": 1,
+      "tilt_deg_x10": 1,
+      "enable": true,
+      "tilt_release": true,
+      "zero_tilt": true,
+      "bytes": "01070b00ffff0100010000009f57"
+    },
+    {
+      "name": "seq_near_wrap",
+      "seq": 65534,
+      "left": 123,
+      "right": -123,
+      "tilt_deg_x10": -1,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "0101feff7b0085ffffff000054fe"
+    },
+    {
+      "name": "seq_wrapped",
+      "seq": 0,
+      "left": 321,
+      "right": -321,
+      "tilt_deg_x10": 0,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "010100004101bffe00000000f698"
+    },
+    {
+      "name": "odd_duty",
+      "seq": 4242,
+      "left": 317,
+      "right": -289,
+      "tilt_deg_x10": -79,
+      "enable": true,
+      "tilt_release": false,
+      "zero_tilt": false,
+      "bytes": "010192103d01dffeb1ff000085d3"
+    }
+  ],
+  "telemetry": [
+    {
+      "name": "idle",
+      "status": 0,
+      "seq_echo": 0,
+      "tilt_steps": 0,
+      "range_mm": 65535,
+      "vbat_mv": 0,
+      "loop_us": 0,
+      "bytes": "0100000000000000ffff000000001bdc"
+    },
+    {
+      "name": "running",
+      "status": 1,
+      "seq_echo": 42,
+      "tilt_steps": 1024,
+      "range_mm": 1500,
+      "vbat_mv": 7400,
+      "loop_us": 10050,
+      "bytes": "01012a0000040000dc05e81c422765fc"
+    },
+    {
+      "name": "range_trip",
+      "status": 3,
+      "seq_echo": 43,
+      "tilt_steps": -512,
+      "range_mm": 310,
+      "vbat_mv": 7380,
+      "loop_us": 10120,
+      "bytes": "01032b0000feffff3601d41c882761a1"
+    },
+    {
+      "name": "vbat_low",
+      "status": 4,
+      "seq_echo": 44,
+      "tilt_steps": 0,
+      "range_mm": 2000,
+      "vbat_mv": 6500,
+      "loop_us": 9980,
+      "bytes": "01042c0000000000d0076419fc26c330"
+    },
+    {
+      "name": "watchdog",
+      "status": 8,
+      "seq_echo": 45,
+      "tilt_steps": 7,
+      "range_mm": 65535,
+      "vbat_mv": 7100,
+      "loop_us": 25000,
+      "bytes": "01082d0007000000ffffbc1ba8613355"
+    },
+    {
+      "name": "tilt_moving",
+      "status": 17,
+      "seq_echo": 46,
+      "tilt_steps": -4096,
+      "range_mm": 900,
+      "vbat_mv": 7250,
+      "loop_us": 10011,
+      "bytes": "01112e0000f0ffff8403521c1b27b3c3"
+    },
+    {
+      "name": "all_bits",
+      "status": 31,
+      "seq_echo": 65535,
+      "tilt_steps": 123456,
+      "range_mm": 65534,
+      "vbat_mv": 65535,
+      "loop_us": 65535,
+      "bytes": "011fffff40e20100feffffffffff52e7"
+    },
+    {
+      "name": "negative_steps",
+      "status": 1,
+      "seq_echo": 1,
+      "tilt_steps": -123456,
+      "range_mm": 350,
+      "vbat_mv": 6600,
+      "loop_us": 1,
+      "bytes": "01010100c01dfeff5e01c8190100d1fb"
+    }
+  ]
+}

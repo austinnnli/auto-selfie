@@ -1,0 +1,23 @@
+# D3 control application.
+#
+# The transport deliberately needs NOTHING from this list: server.py speaks
+# HTTPS and WebSocket with the standard library alone, so the phone client
+# works on a laptop with no package index reachable.  Everything below is for
+# perception.
+#
+#   pip install -r requirements.txt
+
+# P-3 detection.  Pinned loosely: the model API is stable, the export tooling
+# underneath it is not.
+ultralytics>=8.3,<9
+opencv-contrib-python>=4.9        # contrib: CSRT lives there (P-5 level 2)
+numpy>=1.26
+
+# P-3 again: export to OpenVINO before running on a CPU-only laptop.
+openvino>=2024.0 ; platform_machine != "armv7l"
+
+# tools/gen_certs.py.  Optional - it falls back to the openssl binary.
+cryptography>=42.0
+
+# tests
+pytest>=8.0

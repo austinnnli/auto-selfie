@@ -1,0 +1,38 @@
+# Defaults for the framing rover.  Anything here is a deliberate choice; run
+# `idf.py menuconfig` only to add, never to "tidy".
+
+CONFIG_IDF_TARGET="esp32s3"
+
+# 240 MHz: the 1 kHz tilt tick and the 100 Hz drive task both want headroom.
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
+
+# 1000 Hz tick so pdMS_TO_TICKS(1) is a real millisecond and the tilt task can
+# actually run at its stated rate.  The default 100 Hz would quantise every
+# step to 10 ms and cap the stepper at 100 half-steps/s.
+CONFIG_FREERTOS_HZ=1000
+
+# Both cores in use: Wi-Fi on 0, control on 1 (F-1).
+CONFIG_FREERTOS_UNICORE=n
+
+# Wi-Fi tuned for latency, not throughput.  A 30 Hz command stream is tiny;
+# what matters is that a packet is not sitting in a buffer for 40 ms.
+CONFIG_ESP_WIFI_STATIC_RX_BUFFER_NUM=8
+CONFIG_ESP_WIFI_DYNAMIC_RX_BUFFER_NUM=16
+CONFIG_ESP_WIFI_TX_BUFFER_TYPE=1
+CONFIG_ESP_WIFI_DYNAMIC_TX_BUFFER_NUM=16
+CONFIG_ESP_WIFI_AMPDU_TX_ENABLED=n
+CONFIG_ESP_WIFI_AMPDU_RX_ENABLED=n
+
+# The hardware task watchdog is a backstop under our own 250 ms command
+# watchdog; it catches a hung task rather than a missing laptop.
+CONFIG_ESP_TASK_WDT_EN=y
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=3
+CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU0=n
+CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU1=n
+
+# Brownout at 7.0 V pack is handled in software by vbat_min_mv; leave the
+# hardware detector on for the case where the buck converter itself sags.
+CONFIG_ESP_BROWNOUT_DET=y
+
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+CONFIG_COMPILER_OPTIMIZATION_PERF=y
