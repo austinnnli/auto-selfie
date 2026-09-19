@@ -32,7 +32,10 @@ python tools/export_model.py             # 2-3x on a CPU-only laptop
 
 # 4. Firmware
 python tools/gen_config_header.py
-cd firmware && idf.py set-target esp32s3 && idf.py build flash monitor
+cd firmware && idf.py set-target esp32s3
+idf.py -DROVER_WIFI_SSID=my-net -DROVER_WIFI_PASS=secret build flash monitor
+# note the IP the rover prints on join - config.json's net.firmware_host
+# must point at it, or pass it as: python -m app.run --host <that ip>
 
 # 5. Drive it
 python -m app.teleop --dry-run           # prints what it would send

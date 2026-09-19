@@ -7,7 +7,7 @@
 #   python ../tools/gen_config_header.py
 #
 # Wi-Fi credentials are compiled in; override without editing a tracked file:
-#   idf.py -DROVER_WIFI_SSID='"my-net"' -DROVER_WIFI_PASS='"secret"' build
+#   idf.py -DROVER_WIFI_SSID=my-net -DROVER_WIFI_PASS=secret build
 
 cmake_minimum_required(VERSION 3.16)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
